@@ -1,0 +1,378 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  background: black;
+  color: white;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px 15px;
+  nav {
+    display: flex;
+    flex-direction: column;
+    a {
+      padding: 20px 10px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      transition: all 0.3s;
+      border-radius: 10px;
+      // yazilar tek satirda olacak white-space
+      white-space: nowrap;
+      &:hover {
+        background: rgb(32, 32, 32);
+      }
+
+      @media (max-width: 870px) {
+        span {
+          display: none;
+        }
+        i {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  #logo {
+    display: none;
+    max-width: 40px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 870px) {
+    #logo-text {
+      display: none;
+    }
+    #logo {
+      display: block;
+    }
+  }
+  img {
+    max-width: 130px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+}
+
+/* ana içerik > üst kısım */
+
+main {
+  width: 100%;
+}
+main header {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 10px;
+
+  @media (max-width: 870px) {
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+
+    input {
+      padding: 6px 12px;
+      border-radius: 5px 0 0 5px;
+      border: none;
+      outline: none;
+    }
+    button {
+      background: #1db954;
+      height: 100%;
+      padding: 0 25px;
+      border: none;
+      color: white;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      &:hover {
+        background: #0ff15e;
+      }
+    }
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    @media (max-width: 870px) {
+      display: none;
+    }
+
+    li {
+      padding: 5px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 300ms;
+      &:hover {
+        background: rgb(60, 60, 60);
+      }
+    }
+  }
+}
+
+main .songs {
+  background: rgb(42, 42, 42);
+  height: 100%;
+  #title {
+    padding: 20px;
+  }
+}
+
+main #list {
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  overflow-y: auto;
+  height: 80vh;
+
+  &::-webkit-scrollbar {
+    background: black;
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #0e9c3f;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 50px;
+  }
+  .card {
+    width: 200px;
+    height: 310px;
+    padding: 15px;
+    background: #181818;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover .play {
+      opacity: 1;
+      bottom: 20px;
+    }
+    figure {
+      position: relative;
+      img {
+        width: 100%;
+        border-radius: 6px;
+        margin-bottom: 10px;
+      }
+      .play {
+        position: absolute;
+        background: #1db954;
+        right: 10px;
+        bottom: 20px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        font-size: 23px;
+        //opacity görünmez olacak
+        opacity: 0;
+        bottom: -20px;
+        transition: all 0.3s;
+        &:hover {
+          background: #0e9c3f;
+          scale: 0.9;
+        }
+      }
+    }
+    h4 {
+      margin-bottom: 6px;
+    }
+  }
+}
+
+/* oynatılan şarkı barı */
+
+.playing {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  z-index: 100;
+  padding: 10px 40px;
+  width: 100%;
+  background-color: #fa8bff;
+  background-image: linear-gradient(
+    240deg,
+    #fa8bff 0%,
+    #2bd2ff 52%,
+    #2bff88 90%
+  );
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      width: 60px;
+      width: 60px;
+      border-radius: 50%;
+    }
+  }
+  audio {
+    width: 300px;
+  }
+  .animate {
+    animation: turn 4s linear infinite;
+    // hangi animasyon kaç saniye sürecek hep aynı hızda ilerlesin ne kadar sürecek.
+  }
+}
+
+@keyframes turn {
+  //animasyon başladığında sahip olunacak değer
+  from {
+    transform: rotate(0);
+  }
+  //animasyonun bitişinde sahip olunacak değer
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// loading ekranı uiversi.io dan hazır alındı.
+.audio-player {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 100px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.player-controls {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.song-info {
+  margin-bottom: 4px;
+}
+
+.song-title {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.artist {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: #ddd;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  background-color: #ff5500;
+  animation: progress-animation 10s linear infinite;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.play-btn,
+.pause-btn,
+.skip-btn,
+.volume-btn {
+  font-size: 16px;
+  color: #666;
+  margin-right: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.play-btn:hover,
+.pause-btn:hover,
+.skip-btn:hover,
+.volume-btn:hover {
+  transform: scale(1.2);
+}
+
+.volume-slider {
+  width: 100px;
+  height: 5px;
+  background-color: #ccc;
+  position: relative;
+  margin-left: 10px;
+}
+
+.volume-slider-bar {
+  height: 100%;
+  background-color: #666;
+}
+
+.volume-slider-handle {
+  width: 16px;
+  height: 16px;
+  background-color: #666;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@keyframes progress-animation {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
